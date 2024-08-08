@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chart Bot</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .chat-container {
+            width: 80%;
+            max-width: 600px;
+            margin: auto;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            overflow-y: scroll;
+            max-height: 400px;
+        }
+
+        .message {
+            margin: 10px 0;
+        }
+
+        .user-message {
+            text-align: right;
+            color: #1a73e8;
+        }
+
+        .bot-message {
+            text-align: left;
+            color: #3cba54;
+        }
+    </style>
+</head>
+<body>
+    <div class="chat-container" id="chat-container">
+        <div class="message bot-message">Hello! How can I assist you today?</div>
+    </div>
+
+    <input type="text" id="user-input" placeholder="Type your message...">
+    <button onclick="sendMessage()">Send</button>
+
+    <script>
+        const chatContainer = document.getElementById('chat-container');
+        const userInput = document.getElementById('user-input');
+
+        function sendMessage() {
+            const message = userInput.value.trim();
+            if (message === '') return;
+
+            appendMessage('You', message, 'user-message');
+            respondToUser(message);
+            userInput.value = '';
+        }
+
+        function respondToUser(message) {
+            let response = getBotResponse(message);
+            appendMessage('Bot', response, 'bot-message');
+        }
+
+        function getBotResponse(message) {
+            message = message.toLowerCase();
+
+           // Example predefined responses
+            if (message.includes('hello')) {
+                return "Hello! How are you?";
+            } else if (message.includes('hey')) {
+                return "Hey! How are you?";
+            } else if (message.includes('hi')) {
+                return "Hi! How are you?";
+            } else if (message.includes('how are you')) {
+                return "I'm just a bot, but I'm here to help!";
+            } else if (message.includes('weather')) {
+                return "Unfortunately, I cannot check the weather.";
+            } else if (message.includes('thank you')) {
+                return "You're welcome!";
+            } else {
+                return "I'm sorry, I don't understand that.";
+            }
+        }
+
+        function appendMessage(sender, message, messageType) {
+            const messageElement = document.createElement('div');
+            messageElement.classList.add('message', messageType);
+            messageElement.innerHTML = `<strong>${sender}:</strong> ${message}`;
+            chatContainer.appendChild(messageElement);
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        }
+
+        // Event listener for Enter key
+        userInput.addEventListener('keyup', function(event) {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
+        });
+    </script>
+</body>
+</html>
