@@ -1,0 +1,56 @@
+""" Code Functionality Analysis "Describe the functionalities provided by the BankAccount class and explain how users can interact with this program. 
+Highlight how the different methods (deposit, withdraw, balance inquiry) contribute to the banking operations."""
+
+class BankAccount:
+    def __init__(self, account_number, name, balance):
+        self.account_number = account_number
+        self.name = name
+        self.balance = balance
+
+    def deposit(self):
+        deposit_amount = int(input("Enter the deposit amount: "))
+        self.balance += deposit_amount
+        print("Deposit successful!")
+        print("Current balance:", self.balance)
+
+    def withdraw(self):
+        withdraw_amount = int(input("Enter the withdrawal amount: "))
+        if withdraw_amount > self.balance:
+            print("Insufficient balance!")
+        else:
+            self.balance -= withdraw_amount
+            print("Withdrawal successful!")
+            print("Current balance:", self.balance)
+
+    def balance_inquiry(self):
+        print("Current balance:", self.balance)
+
+    @staticmethod
+    def display_menu():
+        print("Welcome to Banking Operations")
+        print("Menu")
+        print("\t1. Deposit")
+        print("\t2. Withdraw")
+        print("\t3. Balance Inquiry")
+        print("\t4. Exit")
+
+    def perform_operation(self):
+        while True:
+            self.display_menu()
+            choice = input("Enter the number of the operation you want to perform: ").strip()
+
+            if choice == "1":
+                self.deposit()
+            elif choice == "2":
+                self.withdraw()
+            elif choice == "3":
+                self.balance_inquiry()
+            elif choice == "4":
+                print("Thank you for using our banking system!")
+                break
+            else:
+                print("Invalid choice, please try again.")
+
+# Example usage
+account = BankAccount(account_number=12345, name="John Doe", balance=1000)
+account.perform_operation()
