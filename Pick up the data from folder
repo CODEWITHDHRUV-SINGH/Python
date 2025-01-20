@@ -1,0 +1,40 @@
+import os
+from tkinter import *
+from PIL import Image, ImageTk
+import random as re
+
+root = Tk()
+root.geometry("1000x800")
+root.title("Album")
+Heading = Label(root,text="Photo",fg="red",font=("Times",22,"bold")).grid(row=0,column=0)
+file_path = r"C:\Users\Administrator\Pictures\instagram"
+# Retrieve the list of images
+image_files = []
+for f in os.listdir(file_path):
+    if f.lower().endswith(('png', 'jpg', 'jpeg')):
+        image_files.append(f)
+
+
+i = re.randint(0,39) # it's take rendom number
+# Load and display the first image (if available)
+if image_files:
+    # Form the full path of the first image
+    first_image_path = os.path.join(file_path, image_files[i])
+    
+    # Open the image using PIL
+    img = Image.open(first_image_path)
+
+    # Resize the image for the GUI window (if necessary)
+    img = img.resize((800, 600))  # Adjust size as needed
+
+    # Convert to PhotoImage
+    photo = ImageTk.PhotoImage(img)
+
+    # Display the image
+    img_label = Label(root, image=photo)
+    img_label.grid(row=1, column=0, padx=20, pady=20)
+else:
+    Label(root, text="No images found in the specified folder.", font=("Times", 14)).grid(row=1, column=0)
+
+
+root.mainloop()
